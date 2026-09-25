@@ -1,0 +1,27 @@
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+    - lib/generated/**
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    package_names: false
+    avoid_print: true
+    prefer_single_quotes: true
+    require_trailing_commas: true
+    sort_constructors_first: true
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_final_fields: true
+    prefer_final_locals: true
+    use_super_parameters: true
+    use_key_in_widget_constructors: true
+    unnecessary_this: true
+    use_build_context_synchronously: true
