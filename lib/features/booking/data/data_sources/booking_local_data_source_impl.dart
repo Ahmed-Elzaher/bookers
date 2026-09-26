@@ -51,7 +51,7 @@ class BookingLocalDataSourceImpl implements BookingLocalDataSource {
       slotIndices: bookedIndices,
       startTimeFormatted: startSlot.startTimeFormatted,
       endTimeFormatted: endSlot.endTimeFormatted,
-      durationLabel: duration.labelArabic,
+      durationLabel: isArabic ? duration.labelArabic : duration.labelEnglish,
       bookedAtFormatted: timeStr,
     );
 

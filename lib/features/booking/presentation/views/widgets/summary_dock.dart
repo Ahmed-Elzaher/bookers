@@ -106,7 +106,7 @@ class SummaryDock extends StatelessWidget {
                         duration: const Duration(milliseconds: 180),
                         curve: Curves.easeOutCubic,
                         child: ElevatedButton.icon(
-                          onPressed: canConfirm ? () => _handleConfirm(context, cubit, state, isAr) : null,
+                          onPressed: canConfirm ? () => _handleConfirm(cubit) : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             foregroundColor: AppColors.white,
@@ -180,48 +180,9 @@ class SummaryDock extends StatelessWidget {
   }
 
   void _handleConfirm(
-    BuildContext context,
     BookingCubit cubit,
-    BookingState state,
-    bool isAr,
   ) {
-    final start = state.startTimeFormatted;
-    final end = state.endTimeFormatted;
-    final duration = state.durationLabel;
-
-    final success = cubit.confirmBooking();
-    if (success && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: AppColors.availableBg,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
-            side: const BorderSide(color: AppColors.available, width: 1.2),
-          ),
-          content: Row(
-            children: [
-              Icon(
-                Icons.check_circle_rounded,
-                color: AppColors.available,
-                size: 20.sp,
-              ),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: Text(
-                  '${AppTranslations.tr('bookingSuccess', isArabic: isAr)} $start ➔ $end ($duration).',
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          duration: const Duration(seconds: 4),
-        ),
-      );
-    }
+    cubit.confirmBooking();
   }
 
   void _showResetDialog(BuildContext context, BookingCubit cubit, bool isAr) {

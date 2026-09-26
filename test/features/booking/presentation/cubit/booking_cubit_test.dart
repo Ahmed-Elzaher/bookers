@@ -27,11 +27,11 @@ void main() {
       const validateBookingUseCase = ValidateBookingUseCase();
       final confirmBookingUseCase = ConfirmBookingUseCase(repository: repository);
       final resetScheduleUseCase = ResetScheduleUseCase(repository: repository);
-      const findAlternativeSlotUseCase = FindAlternativeSlotUseCase(
-        validateBookingUseCase: validateBookingUseCase,
-      );
       const getAllAlternativesUseCase = GetAllAlternativesUseCase(
         validateBookingUseCase: validateBookingUseCase,
+      );
+      const findAlternativeSlotUseCase = FindAlternativeSlotUseCase(
+        getAllAlternativesUseCase: getAllAlternativesUseCase,
       );
       final getUserBookingsUseCase = GetUserBookingsUseCase(repository: repository);
       final cancelBookingUseCase = CancelBookingUseCase(repository: repository);
@@ -62,16 +62,21 @@ void main() {
       expect(cubit.state.userBookings, isEmpty);
     });
 
-    test('2. Dynamic duration change triggers reactive revalidation', () {
+    test('2. Dynamic duration change clears old selection and recalculates valid starts', () {
       // Slot 0 with 1.5 hours is valid (0, 1, 2)
       cubit.setDuration(BookingDuration.oneAndHalfHour);
       cubit.selectSlot(0);
       expect(cubit.state.hasValidSelection, isTrue);
       expect(cubit.state.selectedIndices, equals({0, 1, 2}));
 
-      // Switch to 1 hour triggers immediate revalidation!
-      // Slot 0 for 1 hour leaves slot 2 as isolated gap before slot 3 (booked), so it fails!
+      // Changing duration clears previous selection for a fresh start without disruptive modals
       cubit.setDuration(BookingDuration.oneHour);
+      expect(cubit.state.hasValidSelection, isFalse);
+      expect(cubit.state.selectedStartIndex, isNull);
+      expect(cubit.state.validStartIndices.contains(0), isFalse);
+
+      // Selecting slot 0 with 1h explicitly triggers the isolated gap diagnostic
+      cubit.selectSlot(0);
       expect(cubit.state.hasValidSelection, isFalse);
       expect(cubit.state.failure, isA<IsolatedGapFailure>());
     });

@@ -91,20 +91,18 @@ class BookingCubit extends Cubit<BookingState> {
 
     final newValidStarts = _calculateValidStarts(duration, state.slots);
 
-    if (state.selectedStartIndex != null) {
-      _revalidateSelection(
-        startIndex: state.selectedStartIndex!,
-        duration: duration,
-        validStarts: newValidStarts,
-      );
-    } else {
-      emit(
-        state.copyWith(
-          selectedDuration: duration,
-          validStartIndices: newValidStarts,
-        ),
-      );
-    }
+    emit(
+      state.copyWith(
+        selectedDuration: duration,
+        validStartIndices: newValidStarts,
+        clearStartIndex: true,
+        selectedIndices: const {},
+        clearFailure: true,
+        clearAlternative: true,
+        allAvailableAlternatives: const [],
+        showDiagnosticModal: false,
+      ),
+    );
   }
 
   bool confirmBooking() {

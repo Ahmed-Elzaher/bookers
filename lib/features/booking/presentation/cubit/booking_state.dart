@@ -52,9 +52,9 @@ class BookingState extends Equatable {
 
   String? get endTimeFormatted {
     if (selectedIndices.isNotEmpty) {
-      final lastIndex = selectedIndices.last;
+      final maxIndex = selectedIndices.reduce((a, b) => a > b ? a : b);
       return TimeFormatter.formatMinutesTo12H(
-        slots[lastIndex].endMinutes,
+        slots[maxIndex].endMinutes,
         arabic: isArabic,
       );
     }

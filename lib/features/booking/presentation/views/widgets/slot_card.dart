@@ -114,7 +114,7 @@ class _SlotCardState extends State<SlotCard> {
           borderColor = AppColors.surfaceSubtle;
           textColor = AppColors.textMuted;
           statusIcon = Icons.remove_circle_outline_rounded;
-          statusLabel = widget.isArabic ? 'لا يناسب المدة' : 'Not for duration';
+          statusLabel = AppTranslations.tr('notForDuration', isArabic: widget.isArabic);
         }
         break;
     }

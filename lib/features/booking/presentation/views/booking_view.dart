@@ -8,7 +8,6 @@ import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/booking_header.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/diagnostic_dialog.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/duration_selector.dart';
-import 'package:bookers/features/booking/presentation/views/widgets/feature_tour_dialog.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/slots_grid.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/summary_dock.dart';
 
@@ -31,18 +30,11 @@ class _BookingViewBody extends StatefulWidget {
 
 class _BookingViewBodyState extends State<_BookingViewBody> {
   late final ScrollController _scrollController;
-  bool _hasShownInitialTour = false;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!_hasShownInitialTour && mounted) {
-        _hasShownInitialTour = true;
-        FeatureTourDialog.show(context, context.read<BookingCubit>().state.isArabic);
-      }
-    });
   }
 
   @override
@@ -94,7 +86,8 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
             SnackBar(
               backgroundColor: AppColors.surface,
               behavior: SnackBarBehavior.floating,
-              duration: const Duration(seconds: 5),
+              duration: const Duration(seconds: 3),
+              dismissDirection: DismissDirection.horizontal,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.r),
                 side: const BorderSide(color: AppColors.available, width: 1.5),
@@ -115,8 +108,9 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
               ),
               action: SnackBarAction(
                 label: state.isArabic ? 'تراجع' : 'Undo',
-                textColor: AppColors.bookedLight,
+                textColor: AppColors.error,
                 onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   context.read<BookingCubit>().cancelBooking(latestBooking.id);
                 },
               ),

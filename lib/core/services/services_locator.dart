@@ -49,15 +49,15 @@ Future<void> setupServiceLocator() async {
     ),
   );
 
-  getIt.registerLazySingleton<FindAlternativeSlotUseCase>(
-    () => FindAlternativeSlotUseCase(
+  getIt.registerLazySingleton<GetAllAlternativesUseCase>(
+    () => GetAllAlternativesUseCase(
       validateBookingUseCase: getIt<ValidateBookingUseCase>(),
     ),
   );
 
-  getIt.registerLazySingleton<GetAllAlternativesUseCase>(
-    () => GetAllAlternativesUseCase(
-      validateBookingUseCase: getIt<ValidateBookingUseCase>(),
+  getIt.registerLazySingleton<FindAlternativeSlotUseCase>(
+    () => FindAlternativeSlotUseCase(
+      getAllAlternativesUseCase: getIt<GetAllAlternativesUseCase>(),
     ),
   );
 

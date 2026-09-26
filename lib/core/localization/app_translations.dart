@@ -60,6 +60,9 @@ abstract class AppTranslations {
       'suggestedAlternative': 'بديل متاح مقترح لنفس المدة:',
       'startsAt': 'يبدأ الساعة',
       'applyAlternative': 'تطبيق البديل',
+      'notForDuration': 'لا يناسب المدة',
+      'appSlogan': 'الجدولة الذكية والمحكمة للمواعيد',
+      'builtBy': 'Built by Ahmed Elzaher',
     },
     'en': {
       'appName': 'Booker',
@@ -120,6 +123,9 @@ abstract class AppTranslations {
       'suggestedAlternative': 'Suggested available slot for same duration:',
       'startsAt': 'Starts at',
       'applyAlternative': 'Apply Alternative',
+      'notForDuration': 'Not for duration',
+      'appSlogan': 'Smart and reliable appointment booking',
+      'builtBy': 'Built by Ahmed Elzaher',
     },
   };
 

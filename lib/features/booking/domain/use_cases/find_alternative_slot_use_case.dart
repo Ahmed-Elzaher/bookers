@@ -1,15 +1,14 @@
 import 'package:bookers/core/utils/app_constants.dart';
 import 'package:bookers/features/booking/domain/entities/booking_duration.dart';
 import 'package:bookers/features/booking/domain/entities/slot_entity.dart';
-import 'package:bookers/features/booking/domain/use_cases/validate_booking_use_case.dart';
-
+import 'package:bookers/features/booking/domain/use_cases/get_all_alternatives_use_case.dart';
 
 class FindAlternativeSlotUseCase {
   const FindAlternativeSlotUseCase({
-    required this.validateBookingUseCase,
+    required this.getAllAlternativesUseCase,
   });
 
-  final ValidateBookingUseCase validateBookingUseCase;
+  final GetAllAlternativesUseCase getAllAlternativesUseCase;
 
   /// البحث عن أقرب خانة بداية صالحة للمدة المحددة
   int? call({
@@ -17,19 +16,10 @@ class FindAlternativeSlotUseCase {
     required BookingDuration duration,
     required List<SlotEntity> currentSlots,
   }) {
-    final validIndices = <int>[];
-
-    for (int i = 0; i < AppConstants.totalDaySlots; i++) {
-      final validationResult = validateBookingUseCase(
-        startIndex: i,
-        duration: duration,
-        currentSlots: currentSlots,
-      );
-
-      if (validationResult.isRight()) {
-        validIndices.add(i);
-      }
-    }
+    final validIndices = getAllAlternativesUseCase(
+      duration: duration,
+      currentSlots: currentSlots,
+    );
 
     if (validIndices.isEmpty) {
       return null;

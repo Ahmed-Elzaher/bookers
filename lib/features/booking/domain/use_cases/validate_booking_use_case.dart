@@ -94,14 +94,29 @@ class ValidateBookingUseCase {
       (i) => (i >= startIndex && i <= endIndex) ? BookingStatus.booked : slots[i].status,
     );
 
-    for (int i = 0; i < AppConstants.totalDaySlots; i++) {
-      if (simulatedStatuses[i] == BookingStatus.available) {
-        final bool leftBlocked = (i == 0) || simulatedStatuses[i - 1].isBlocked;
-        final bool rightBlocked = (i == AppConstants.totalDaySlots - 1) || simulatedStatuses[i + 1].isBlocked;
+    bool isSlotIsolated(int i, List<BookingStatus> statuses) {
+      if (statuses[i] != BookingStatus.available) return false;
+      final bool leftBlocked = (i == 0) || statuses[i - 1].isBlocked;
+      final bool rightBlocked = (i == AppConstants.totalDaySlots - 1) || statuses[i + 1].isBlocked;
+      return leftBlocked && rightBlocked;
+    }
 
-        if (leftBlocked && rightBlocked) {
-          return i;
-        }
+    // Only check candidate neighbors directly affected by this booking:
+    // Left candidate: startIndex - 1
+    final leftCandidate = startIndex - 1;
+    if (leftCandidate >= 0 && isSlotIsolated(leftCandidate, simulatedStatuses)) {
+      final wasAlreadyIsolated = isSlotIsolated(leftCandidate, slots.map((s) => s.status).toList());
+      if (!wasAlreadyIsolated) {
+        return leftCandidate;
+      }
+    }
+
+    // Right candidate: endIndex + 1
+    final rightCandidate = endIndex + 1;
+    if (rightCandidate < AppConstants.totalDaySlots && isSlotIsolated(rightCandidate, simulatedStatuses)) {
+      final wasAlreadyIsolated = isSlotIsolated(rightCandidate, slots.map((s) => s.status).toList());
+      if (!wasAlreadyIsolated) {
+        return rightCandidate;
       }
     }
 

@@ -28,4 +28,18 @@ enum BookingStatus {
         return 'محدد';
     }
   }
+
+  /// English label
+  String get labelEnglish {
+    switch (this) {
+      case BookingStatus.available:
+        return 'Available';
+      case BookingStatus.booked:
+        return 'Booked';
+      case BookingStatus.unavailable:
+        return 'Unavailable';
+      case BookingStatus.selected:
+        return 'Selected';
+    }
+  }
 }

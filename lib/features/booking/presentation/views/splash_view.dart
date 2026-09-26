@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bookers/core/localization/app_translations.dart';
 import 'package:bookers/core/theme/app_colors.dart';
 import 'package:bookers/core/theme/app_text_styles.dart';
 import 'package:bookers/core/utils/app_constants.dart';
@@ -149,7 +150,7 @@ class _SplashViewState extends State<SplashView>
                         ),
                         SizedBox(height: 6.h),
                         Text(
-                          'الجدولة الذكية والمحكمة للمواعيد',
+                          AppTranslations.tr('appSlogan', isArabic: true),
                           style: AppTextStyles.body.copyWith(
                             color: AppColors.textSecondary,
                             fontWeight: FontWeight.w600,
@@ -166,7 +167,7 @@ class _SplashViewState extends State<SplashView>
               child: FadeTransition(
                 opacity: _fadeAnimation,
                 child: Text(
-                  'Build By Ahmed Elzaher',
+                  AppTranslations.tr('builtBy'),
                   style: AppTextStyles.bodySmall,
                 ),
               ),
