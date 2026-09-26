@@ -4,9 +4,6 @@ import 'package:bookers/features/booking/domain/entities/slot_entity.dart';
 import 'package:bookers/features/booking/domain/entities/user_booking_entity.dart';
 import 'package:bookers/features/booking/domain/repositories/booking_repository.dart';
 
-//! =========================================================
-//! Repository Implementation: BookingRepositoryImpl
-//! =========================================================
 
 class BookingRepositoryImpl implements BookingRepository {
   const BookingRepositoryImpl({

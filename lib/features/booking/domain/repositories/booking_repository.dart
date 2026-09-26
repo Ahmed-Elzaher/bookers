@@ -2,9 +2,6 @@ import 'package:bookers/features/booking/domain/entities/booking_duration.dart';
 import 'package:bookers/features/booking/domain/entities/slot_entity.dart';
 import 'package:bookers/features/booking/domain/entities/user_booking_entity.dart';
 
-//! =========================================================
-//! Domain Repository Contract: BookingRepository
-//! =========================================================
 
 abstract class BookingRepository {
   /// جلب جدول اليوم الحالي

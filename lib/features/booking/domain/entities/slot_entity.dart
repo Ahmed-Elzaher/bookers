@@ -2,9 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:bookers/core/utils/time_formatter.dart';
 import 'package:bookers/features/booking/domain/entities/booking_status.dart';
 
-//! =========================================================
-//! Domain Entity: SlotEntity
-//! =========================================================
 
 class SlotEntity extends Equatable {
   const SlotEntity({

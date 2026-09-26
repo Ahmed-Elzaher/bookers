@@ -1,8 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-//! =========================================================
-//! Domain Entity: UserBookingEntity
-//! =========================================================
 
 class UserBookingEntity extends Equatable {
   const UserBookingEntity({

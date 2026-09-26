@@ -10,9 +10,6 @@ import 'package:bookers/core/utils/time_formatter.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_cubit.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 
-//! =========================================================
-//! Widget: FeedbackCard
-//! =========================================================
 
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({super.key});

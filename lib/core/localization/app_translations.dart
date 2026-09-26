@@ -1,6 +1,3 @@
-//! =========================================================
-//! Localization Dictionary (AR / EN)
-//! =========================================================
 
 abstract class AppTranslations {
   static const Map<String, Map<String, String>> _localizedValues = {

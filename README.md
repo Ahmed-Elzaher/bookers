@@ -1,44 +1,24 @@
-# 📅 Booker - Smart Local Appointment Scheduling App
+# Booker
 
-A production-grade, highly reliable offline appointment booking application built with **Flutter**, designed following strict **Clean Architecture**, **SOLID Principles**, and advanced **Constraint Satisfaction Algorithms**.
+A Flutter appointment booking application designed around an 18-slot daily schedule (9:00 AM to 6:00 PM). It models 30-minute intervals and enforces contiguity, boundary limits, and orphaned-slot avoidance.
 
----
+## Architecture
 
-## 🚀 Key Architectural & Algorithmic Features
+The project follows Clean Architecture principles:
 
-### 1. ⏱️ Discrete 18-Slot Schedule Structure
-- Operating Hours: **9:00 AM – 6:00 PM** (9 continuous hours).
-- The day is mathematically modeled as an array of **18 discrete 30-minute intervals** (`0` to `17`).
-- Supported Booking Durations:
-  - **30 Minutes** (1 slot)
-  - **1 Hour** (2 consecutive slots)
-  - **1.5 Hours** (3 consecutive slots)
-  - **2 Hours** (4 consecutive slots)
+- **Domain**: Pure Dart business logic, entities, repository interfaces, and use cases with zero Flutter framework dependencies.
+- **Data**: Local data source, data models, and repository implementation.
+- **Presentation**: Flutter widgets, BLoC/Cubit state management, and responsive layouts.
 
-### 2. 🛡️ 3-Tier Algorithmic Validation Pipeline
-Pure Dart domain-layer enforcement (`ValidateBookingUseCase`):
-1. **Bounds Check**: Prevents booking from exceeding the 6:00 PM boundary (`startIndex + span - 1 < 18`).
-2. **Contiguity & Overlap Check**: Ensures all requested intervals are strictly consecutive and available.
-3. **Isolated Gap Constraint (X O X)**:
-   - Evaluated via a **Virtual Lookahead State Simulation**:
-   - Rejects any reservation that leaves a single, unusable 30-minute interval isolated between two bookings, or between a booking and the day start/end boundaries.
+## Core Features
 
-### 3. 💡 Smart Alternatives Engine
-- **Nearest-Neighbor Search**: Calculates $\min(|i - \text{attemptedIndex}|)$ to suggest the temporally closest valid slot.
-- **Full Discovery**: Aggregates all viable alternatives in a centralized interactive diagnostic modal with animated auto-scroll and focus glow.
+- **Slot Model**: 18 discrete 30-minute intervals per day supporting 30m, 1h, 1.5h, and 2h booking durations.
+- **Validation Pipeline**: Checks opening and closing boundaries, slot contiguity, and orphaned single-slot gaps via state simulation.
+- **Alternative Slot Finder**: Recommends the closest valid alternative slot when a requested slot violates schedule constraints.
+- **Localization**: Full support for Arabic (RTL) and English (LTR) using the Cairo typeface.
+- **Responsive Layout**: Adaptive grid layouts scaled with ScreenUtil across mobile and tablet form factors.
 
-### 4. 📱 Responsive & Multilingual
-- Fully responsive across all devices and aspect ratios using `flutter_screenutil`.
-- Official Flutter SDK localization (`flutter_localizations` with `.arb` files) supporting **Arabic (RTL)** and **English (LTR)**.
-- Unified typography powered by **Cairo** font.
-
-### 5. 🎟️ Local Booking Management
-- View confirmed booking tickets in the "My Bookings" bottom sheet.
-- Instant booking cancellation with immediate state reversion and slot freeing.
-
----
-
-## 🏛️ Clean Architecture Structure
+## Project Structure
 
 ```
 lib/
@@ -46,24 +26,19 @@ lib/
 ├── main.dart                          # Entry point and GetIt DI initialization
 ├── core/
 │   ├── errors/                        # Domain Failures & Exceptions
-│   ├── localization/                  # AppTranslations bridge
+│   ├── localization/                  # Translations bridge
 │   ├── services/                      # GetIt Service Locator
-│   ├── theme/                         # AppColors, AppTextStyles, AppTheme
-│   └── utils/                         # AppConstants & TimeFormatter
-├── l10n/                              # Official ARB localization files (AR / EN)
+│   ├── theme/                         # Colors, Typography, Theme
+│   └── utils/                         # Constants & TimeFormatter
+├── l10n/                              # ARB localization files
 └── features/
     └── booking/
-        ├── data/                      # Local data source & repository implementation
-        ├── domain/                    # Pure Dart entities, contracts, and use cases
-        └── presentation/              # Bloc/Cubit and UI widgets
+        ├── data/                      # Local data source & repository
+        ├── domain/                    # Entities, contracts, use cases
+        └── presentation/              # Cubit and UI widgets
 ```
 
----
-
-## 🧪 Testing & Code Quality
-
-- **Lint Status**: Zero warnings or errors with strict analysis rules.
-- **Unit & Widget Tests**: 100% passing test suite verifying bounds, overlaps, isolated gap edge cases, reactive revalidation, and cancellation.
+## Running Tests and Analysis
 
 ```bash
 flutter analyze

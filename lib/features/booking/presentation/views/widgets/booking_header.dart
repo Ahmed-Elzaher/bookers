@@ -10,9 +10,6 @@ import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/feature_tour_dialog.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/my_bookings_sheet.dart';
 
-//! =========================================================
-//! Widget: BookingHeader
-//! =========================================================
 
 class BookingHeader extends StatelessWidget {
   const BookingHeader({
@@ -35,10 +32,17 @@ class BookingHeader extends StatelessWidget {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           decoration: BoxDecoration(
-            color: AppColors.surface.withValues(alpha: 0.85),
+            color: AppColors.surface,
             border: const Border(
               bottom: BorderSide(color: AppColors.surfaceSubtle, width: 1),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0x060F172A),
+                blurRadius: 8.r,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,15 +52,15 @@ class BookingHeader extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8.r),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.15),
+                      color: AppColors.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(AppConstants.radiusSmall),
                       border: Border.all(
-                        color: AppColors.primary.withValues(alpha: 0.3),
+                        color: AppColors.primary.withValues(alpha: 0.25),
                       ),
                     ),
                     child: Icon(
                       Icons.schedule_rounded,
-                      color: AppColors.primaryLight,
+                      color: AppColors.primary,
                       size: 20.sp,
                     ),
                   ),
@@ -89,14 +93,18 @@ class BookingHeader extends StatelessWidget {
                         onTap: () => cubit.toggleLanguage(),
                         borderRadius: BorderRadius.circular(AppConstants.radiusSmall),
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
+                          padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 6.h),
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceSubtle.withValues(alpha: 0.5),
+                            color: AppColors.primary.withValues(alpha: 0.08),
                             borderRadius: BorderRadius.circular(AppConstants.radiusSmall),
+                            border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
                           ),
                           child: Text(
                             AppTranslations.tr('changeLanguage', isArabic: isAr),
-                            style: AppTextStyles.badge.copyWith(color: AppColors.primaryLight),
+                            style: AppTextStyles.badge.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
@@ -118,7 +126,7 @@ class BookingHeader extends StatelessWidget {
                           IconButton.filledTonal(
                             onPressed: () => MyBookingsSheet.show(context),
                             style: IconButton.styleFrom(
-                              backgroundColor: AppColors.surfaceSubtle.withValues(alpha: 0.5),
+                              backgroundColor: AppColors.surfaceSubtle.withValues(alpha: 0.4),
                               foregroundColor: AppColors.textPrimary,
                               padding: EdgeInsets.zero,
                               minimumSize: Size(32.w, 32.h),

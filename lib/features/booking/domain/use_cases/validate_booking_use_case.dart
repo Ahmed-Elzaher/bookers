@@ -6,14 +6,11 @@ import 'package:bookers/features/booking/domain/entities/booking_duration.dart';
 import 'package:bookers/features/booking/domain/entities/booking_status.dart';
 import 'package:bookers/features/booking/domain/entities/slot_entity.dart';
 
-//! =========================================================
-//! Use Case: ValidateBookingUseCase
-//! =========================================================
 
 class ValidateBookingUseCase {
   const ValidateBookingUseCase();
 
-  /// فحص مسار القواعد المتتابع (Bounds ➔ Overlap ➔ Isolated Gap X O X)
+  // Validates bounds, contiguity, and orphaned gap constraint
   Either<Failure, List<int>> call({
     required int startIndex,
     required BookingDuration duration,
@@ -27,7 +24,6 @@ class ValidateBookingUseCase {
       );
     }
 
-    // 1. فحص خانة البداية (Start Slot)
     final startSlot = currentSlots[startIndex];
     if (startSlot.status != BookingStatus.available) {
       return Left(
@@ -38,7 +34,6 @@ class ValidateBookingUseCase {
       );
     }
 
-    // 2. فحص الحدود (Bounds Check): هل يتجاوز نهاية اليوم عند 6:00 م؟
     final int endIndex = startIndex + duration.slotCount - 1;
     if (endIndex >= AppConstants.totalDaySlots) {
       final availableRemainingMinutes = (AppConstants.totalDaySlots - startIndex) * AppConstants.slotDurationInMinutes;
@@ -54,7 +49,6 @@ class ValidateBookingUseCase {
       );
     }
 
-    // 3. فحص التتابع وعدم التداخل (Overlap Check)
     for (int i = startIndex; i <= endIndex; i++) {
       final slot = currentSlots[i];
       if (slot.status != BookingStatus.available) {
@@ -68,7 +62,7 @@ class ValidateBookingUseCase {
       }
     }
 
-    // 4. فحص الفجوة المعزولة عبر المحاكاة الشاملة (Isolated Gap Simulation - X O X)
+    // Check if this booking leaves an isolated 30-min slot (X O X pattern)
     final gapIndex = _findIsolatedGapAfterBooking(
       startIndex: startIndex,
       endIndex: endIndex,
@@ -86,12 +80,10 @@ class ValidateBookingUseCase {
       );
     }
 
-    // نجاح التحقق بالكامل
     final selectedIndices = List<int>.generate(duration.slotCount, (i) => startIndex + i);
     return Right(selectedIndices);
   }
 
-  /// محاكاة الحجز واكتشاف أي خانة وحيدة 30 دقيقة محاصرة ومحجوبة من الجهتين
   int? _findIsolatedGapAfterBooking({
     required int startIndex,
     required int endIndex,

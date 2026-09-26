@@ -1,9 +1,6 @@
 import 'package:bookers/features/booking/domain/entities/user_booking_entity.dart';
 import 'package:bookers/features/booking/domain/repositories/booking_repository.dart';
 
-//! =========================================================
-//! Use Case: GetUserBookingsUseCase
-//! =========================================================
 
 class GetUserBookingsUseCase {
   const GetUserBookingsUseCase({required this.repository});

@@ -5,10 +5,6 @@ import 'package:bookers/core/theme/app_text_styles.dart';
 import 'package:bookers/core/utils/app_constants.dart';
 import 'package:bookers/features/booking/presentation/views/booking_view.dart';
 
-//! =========================================================
-//! View: SplashView
-//! =========================================================
-
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
@@ -16,7 +12,8 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
@@ -54,10 +51,12 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 700),
-            pageBuilder: (context, animation, secondaryAnimation) => const BookingView(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const BookingView(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
           ),
         );
       }
@@ -88,7 +87,9 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
                       center: Alignment.center,
                       radius: 0.85,
                       colors: [
-                        AppColors.primary.withValues(alpha: 0.18 * _glowAnimation.value),
+                        AppColors.primary.withValues(
+                          alpha: 0.18 * _glowAnimation.value,
+                        ),
                         AppColors.background,
                       ],
                     ),
@@ -114,7 +115,9 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
                             AppColors.primaryDark,
                           ],
                         ),
-                        borderRadius: BorderRadius.circular(AppConstants.radiusModal),
+                        borderRadius: BorderRadius.circular(
+                          AppConstants.radiusModal,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: AppColors.primary.withValues(alpha: 0.4),
@@ -163,7 +166,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
               child: FadeTransition(
                 opacity: _fadeAnimation,
                 child: Text(
-                  'Clean Architecture • Solid Principles',
+                  'Build By Ahmed Elzaher',
                   style: AppTextStyles.bodySmall,
                 ),
               ),

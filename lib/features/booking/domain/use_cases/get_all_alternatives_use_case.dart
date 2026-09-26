@@ -3,9 +3,6 @@ import 'package:bookers/features/booking/domain/entities/booking_duration.dart';
 import 'package:bookers/features/booking/domain/entities/slot_entity.dart';
 import 'package:bookers/features/booking/domain/use_cases/validate_booking_use_case.dart';
 
-//! =========================================================
-//! Use Case: GetAllAlternativesUseCase
-//! =========================================================
 
 class GetAllAlternativesUseCase {
   const GetAllAlternativesUseCase({

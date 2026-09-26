@@ -1,8 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-//! =========================================================
-//! Core Application Constants
-//! =========================================================
 
 abstract class AppConstants {
   static const String appName = 'Booker';

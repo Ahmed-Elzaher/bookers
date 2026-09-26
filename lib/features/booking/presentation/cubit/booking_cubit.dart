@@ -13,9 +13,6 @@ import 'package:bookers/features/booking/domain/use_cases/reset_schedule_use_cas
 import 'package:bookers/features/booking/domain/use_cases/validate_booking_use_case.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 
-//! =========================================================
-//! Presentation Cubit: BookingCubit
-//! =========================================================
 
 class BookingCubit extends Cubit<BookingState> {
   BookingCubit({
@@ -46,28 +43,24 @@ class BookingCubit extends Cubit<BookingState> {
   final CancelBookingUseCase cancelBookingUseCase;
   final BookingRepository repository;
 
-  /// تبديل لغة التطبيق (AR ⇄ EN)
   void toggleLanguage() {
     emit(state.copyWith(isArabic: !state.isArabic));
   }
 
-  /// إغلاق نافذة التنبيه والتشخيص
   void dismissDiagnosticModal() {
     emit(state.copyWith(showDiagnosticModal: false));
   }
 
-  /// تنظيف تركيز التمرير بعد انتهاء الحركة
   void clearFocus() {
     emit(state.copyWith(clearFocus: true));
   }
 
-  /// اختيار خانة البداية
   void selectSlot(int index) {
     if (index < 0 || index >= AppConstants.totalDaySlots) {
       return;
     }
 
-    if (state.selectedStartIndex == index && state.hasValidSelection) {
+    if (state.selectedIndices.contains(index) && state.hasValidSelection) {
       clearSelection();
       return;
     }
@@ -75,7 +68,6 @@ class BookingCubit extends Cubit<BookingState> {
     _revalidateSelection(startIndex: index, duration: state.selectedDuration);
   }
 
-  /// اختيار موعد بديل وإغلاق النافذة والتركيز عليه فورياً
   void selectAlternativeAndFocus(int index) {
     dismissDiagnosticModal();
     _revalidateSelection(
@@ -85,7 +77,6 @@ class BookingCubit extends Cubit<BookingState> {
     );
   }
 
-  /// تطبيق البديل المقترح تلقائياً
   void applySuggestedAlternative() {
     final altIndex = state.suggestedAlternativeIndex;
     if (altIndex != null) {
@@ -93,7 +84,6 @@ class BookingCubit extends Cubit<BookingState> {
     }
   }
 
-  /// تغيير مدة الحجز
   void setDuration(BookingDuration duration) {
     if (state.selectedDuration == duration) {
       return;
@@ -117,7 +107,6 @@ class BookingCubit extends Cubit<BookingState> {
     }
   }
 
-  /// تأكيد الحجز الفعلي وإنشاء التذكرة
   bool confirmBooking() {
     if (!state.hasValidSelection) {
       return false;
@@ -126,7 +115,6 @@ class BookingCubit extends Cubit<BookingState> {
     final bookedIndices = state.selectedIndices.toList();
     final updatedSlots = confirmBookingUseCase(bookedIndices);
 
-    // إنشاء تذكرة للمستخدم
     repository.createBookingTicket(
       bookedIndices: bookedIndices,
       duration: state.selectedDuration,
@@ -154,7 +142,6 @@ class BookingCubit extends Cubit<BookingState> {
     return true;
   }
 
-  /// إلغاء حجز معين وتحرير الخانات فورياً في الجدول
   void cancelBooking(String bookingId) {
     final updatedSlots = cancelBookingUseCase(bookingId);
     final updatedTickets = getUserBookingsUseCase();
@@ -169,7 +156,6 @@ class BookingCubit extends Cubit<BookingState> {
     );
   }
 
-  /// إعادة ضبط الجدول للحالة الافتراضية
   void resetSchedule() {
     final defaultSlots = resetScheduleUseCase();
     final newValidStarts = _calculateValidStarts(BookingDuration.thirtyMin, defaultSlots);
@@ -185,7 +171,6 @@ class BookingCubit extends Cubit<BookingState> {
     );
   }
 
-  /// إلغاء التحديد
   void clearSelection() {
     emit(
       state.copyWith(
@@ -199,9 +184,6 @@ class BookingCubit extends Cubit<BookingState> {
     );
   }
 
-  //! =========================================================
-  //! Internal Helper Methods
-  //! =========================================================
 
   void _revalidateSelection({
     required int startIndex,

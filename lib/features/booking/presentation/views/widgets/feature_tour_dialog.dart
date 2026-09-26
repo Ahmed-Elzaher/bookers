@@ -5,9 +5,6 @@ import 'package:bookers/core/theme/app_colors.dart';
 import 'package:bookers/core/theme/app_text_styles.dart';
 import 'package:bookers/core/utils/app_constants.dart';
 
-//! =========================================================
-//! Widget: FeatureTourDialog
-//! =========================================================
 
 class FeatureTourDialog extends StatefulWidget {
   const FeatureTourDialog({super.key, required this.isArabic});

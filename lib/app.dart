@@ -9,9 +9,6 @@ import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 import 'package:bookers/features/booking/presentation/views/splash_view.dart';
 import 'package:bookers/l10n/app_localizations.dart';
 
-//! =========================================================
-//! Application Root Widget: BookerApp
-//! =========================================================
 
 class BookerApp extends StatelessWidget {
   const BookerApp({super.key});
@@ -31,7 +28,7 @@ class BookerApp extends StatelessWidget {
               return MaterialApp(
                 title: AppConstants.appName,
                 debugShowCheckedModeBanner: false,
-                theme: AppTheme.darkTheme,
+                theme: AppTheme.lightTheme,
                 locale: state.isArabic ? const Locale('ar') : const Locale('en'),
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,

@@ -2,9 +2,6 @@ import 'package:bookers/features/booking/data/models/slot_model.dart';
 import 'package:bookers/features/booking/domain/entities/booking_duration.dart';
 import 'package:bookers/features/booking/domain/entities/user_booking_entity.dart';
 
-//! =========================================================
-//! Data Source Contract: BookingLocalDataSource
-//! =========================================================
 
 abstract class BookingLocalDataSource {
   /// قراءة الجدول المحلي الحالي

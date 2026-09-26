@@ -8,9 +8,6 @@ import 'package:bookers/core/utils/app_constants.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_cubit.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 
-//! =========================================================
-//! Widget: SummaryDock
-//! =========================================================
 
 class SummaryDock extends StatelessWidget {
   const SummaryDock({super.key});
@@ -36,9 +33,9 @@ class SummaryDock extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.black.withValues(alpha: 0.35),
-                blurRadius: 16.r,
-                offset: const Offset(0, -5),
+                color: const Color(0x0E0F172A),
+                blurRadius: 20.r,
+                offset: const Offset(0, -6),
               ),
             ],
           ),
@@ -54,7 +51,7 @@ class SummaryDock extends StatelessWidget {
                         label: AppTranslations.tr('startTime', isArabic: isAr),
                         value: startTime,
                         icon: Icons.login_rounded,
-                        color: canConfirm ? AppColors.primaryLight : AppColors.textMuted,
+                        color: canConfirm ? AppColors.primary : AppColors.textMuted,
                       ),
                     ),
                     Container(
@@ -67,7 +64,7 @@ class SummaryDock extends StatelessWidget {
                         label: AppTranslations.tr('endTime', isArabic: isAr),
                         value: endTime,
                         icon: Icons.logout_rounded,
-                        color: canConfirm ? AppColors.primaryLight : AppColors.textMuted,
+                        color: canConfirm ? AppColors.primary : AppColors.textMuted,
                       ),
                     ),
                     Container(
@@ -92,6 +89,7 @@ class SummaryDock extends StatelessWidget {
                       onPressed: () => _showResetDialog(context, cubit, isAr),
                       style: IconButton.styleFrom(
                         foregroundColor: AppColors.textSecondary,
+                        backgroundColor: AppColors.background,
                         side: const BorderSide(color: AppColors.surfaceSubtle),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
@@ -103,28 +101,35 @@ class SummaryDock extends StatelessWidget {
                     ),
                     SizedBox(width: 10.w),
                     Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: canConfirm ? () => _handleConfirm(context, cubit, state, isAr) : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.white,
-                          disabledBackgroundColor: AppColors.surfaceSubtle.withValues(alpha: 0.5),
-                          disabledForegroundColor: AppColors.textMuted,
-                          elevation: canConfirm ? 3 : 0,
-                          shadowColor: AppColors.primary.withValues(alpha: 0.4),
-                          padding: EdgeInsets.symmetric(vertical: 12.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+                      child: AnimatedScale(
+                        scale: canConfirm ? 1.0 : 0.98,
+                        duration: const Duration(milliseconds: 180),
+                        curve: Curves.easeOutCubic,
+                        child: ElevatedButton.icon(
+                          onPressed: canConfirm ? () => _handleConfirm(context, cubit, state, isAr) : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: AppColors.white,
+                            disabledBackgroundColor: const Color(0xFFF1F5F9),
+                            disabledForegroundColor: AppColors.textMuted,
+                            elevation: canConfirm ? 3 : 0,
+                            shadowColor: AppColors.primary.withValues(alpha: 0.35),
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+                            ),
                           ),
-                        ),
-                        icon: Icon(Icons.check_circle_outline_rounded, size: 18.sp),
-                        label: Text(
-                          canConfirm
-                              ? AppTranslations.tr('confirmBooking', isArabic: isAr)
-                              : AppTranslations.tr('selectValidSlot', isArabic: isAr),
-                          style: AppTextStyles.buttonLabel,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          icon: Icon(Icons.check_circle_outline_rounded, size: 18.sp),
+                          label: Text(
+                            canConfirm
+                                ? AppTranslations.tr('confirmBooking', isArabic: isAr)
+                                : AppTranslations.tr('selectValidSlot', isArabic: isAr),
+                            style: AppTextStyles.buttonLabel.copyWith(
+                              color: canConfirm ? AppColors.white : AppColors.textMuted,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ),

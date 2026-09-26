@@ -10,9 +10,6 @@ import 'package:bookers/core/utils/time_formatter.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_cubit.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 
-//! =========================================================
-//! Widget: DiagnosticDialog
-//! =========================================================
 
 class DiagnosticDialog extends StatelessWidget {
   const DiagnosticDialog({
@@ -52,30 +49,30 @@ class DiagnosticDialog extends StatelessWidget {
 
         if (failure is IsolatedGapFailure) {
           accentColor = AppColors.warning;
-          iconData = Icons.warning_amber_rounded;
-          title = AppTranslations.tr('isolatedGapTitle', isArabic: isAr);
+          iconData = Icons.schedule_rounded;
+          title = isAr ? 'الموعد غير متوافق مع الجدول' : 'Slot Incompatible With Schedule';
           description = isAr
-              ? 'سيؤدي هذا الحجز إلى ترك فترة 30 دقيقة معزولة بين حجزين أو في نهاية اليوم (شرط X O X).'
-              : 'This booking leaves an isolated 30-minute slot between bookings or at day end (X O X constraint).';
+              ? 'عفواً، لا يمكن بدء موعد بهذا التوقيت لضمان تنظيم جدول المواعيد. يُرجى اختيار أحد المواعيد البديلة المقترحة بالأسفل.'
+              : 'This time slot cannot be booked to preserve schedule organization. Please choose one of the recommended alternative slots below.';
         } else if (failure is OverlapFailure) {
           accentColor = AppColors.error;
-          iconData = Icons.error_outline_rounded;
-          title = AppTranslations.tr('conflictTitle', isArabic: isAr);
+          iconData = Icons.event_busy_rounded;
+          title = isAr ? 'تعارض مع موعد آخر' : 'Schedule Conflict';
           description = isAr
-              ? 'الموعد المحدد يتعارض مع حجز قائم مسبقاً أو غير متاح.'
-              : 'The selected slot conflicts with an existing booking or break.';
+              ? 'يتعارض هذا التوقيت مع موعد محجوز مسبقاً أو فترة استراحة. يمكنك اختيار أحد المواعيد المتاحة.'
+              : 'The selected slot conflicts with an existing booking or break. Please select from the available alternatives.';
         } else if (failure is OutOfBoundsFailure) {
           accentColor = AppColors.error;
           iconData = Icons.av_timer_rounded;
-          title = AppTranslations.tr('outOfBoundsTitle', isArabic: isAr);
+          title = isAr ? 'تجاوز موعد الإغلاق' : 'Past Closing Time';
           description = isAr
-              ? 'مدة الحجز تتجاوز موعد نهاية يوم العمل (الساعة 6:00 مساءً).'
-              : 'The selected duration extends past the 6:00 PM closing time.';
+              ? 'مدة الحجز المختارة تتجاوز موعد نهاية يوم العمل (الساعة 6:00 مساءً). نقترح عليك البدء في توقيت أبكر.'
+              : 'The selected duration extends past the 6:00 PM closing time. We recommend choosing an earlier start time.';
         } else {
           accentColor = AppColors.textMuted;
           iconData = Icons.info_outline_rounded;
-          title = AppTranslations.tr('invalidStartTitle', isArabic: isAr);
-          description = failure.message;
+          title = isAr ? 'الموعد غير متاح' : 'Slot Unavailable';
+          description = isAr ? 'هذا الموعد محجوز أو غير متاح حالياً.' : failure.message;
         }
 
         return Directionality(
@@ -129,7 +126,7 @@ class DiagnosticDialog extends StatelessWidget {
                       Text(
                         AppTranslations.tr('allAvailableAlternatives', isArabic: isAr),
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.primaryLight,
+                          color: AppColors.primaryDark,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -156,10 +153,10 @@ class DiagnosticDialog extends StatelessWidget {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary.withValues(alpha: 0.15),
+                                    color: AppColors.primary.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(AppConstants.radiusSmall),
                                     border: Border.all(
-                                      color: AppColors.primaryLight.withValues(alpha: 0.5),
+                                      color: AppColors.primary.withValues(alpha: 0.3),
                                       width: 1,
                                     ),
                                   ),
@@ -169,14 +166,15 @@ class DiagnosticDialog extends StatelessWidget {
                                       Icon(
                                         Icons.access_time_filled_rounded,
                                         size: 13.sp,
-                                        color: AppColors.primaryLight,
+                                        color: AppColors.primary,
                                       ),
                                       SizedBox(width: 5.w),
                                       Text(
                                         slotRange,
                                         style: AppTextStyles.slotTime.copyWith(
                                           fontSize: 11.sp,
-                                          color: AppColors.white,
+                                          color: AppColors.primaryDark,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                     ],

@@ -1,9 +1,6 @@
 import 'package:bookers/features/booking/domain/entities/booking_status.dart';
 import 'package:bookers/features/booking/domain/entities/slot_entity.dart';
 
-//! =========================================================
-//! Data Model: SlotModel
-//! =========================================================
 
 class SlotModel extends SlotEntity {
   const SlotModel({

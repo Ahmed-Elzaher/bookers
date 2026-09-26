@@ -3,9 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bookers/core/theme/app_colors.dart';
 
-//! =========================================================
-//! Typography and Text Styles (Unified Cairo Font with ScreenUtil)
-//! =========================================================
 
 abstract class AppTextStyles {
   static TextStyle get brandTitle => GoogleFonts.cairo(
@@ -32,6 +29,12 @@ abstract class AppTextStyles {
         fontWeight: FontWeight.w400,
         color: AppColors.textSecondary,
         height: 1.45,
+      );
+
+  static TextStyle get bodyMedium => GoogleFonts.cairo(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
       );
 
   static TextStyle get bodySmall => GoogleFonts.cairo(

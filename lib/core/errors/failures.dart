@@ -1,8 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-//! =========================================================
-//! Base Failure
-//! =========================================================
 
 abstract class Failure extends Equatable {
   const Failure({required this.message});
@@ -13,9 +10,6 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [message];
 }
 
-//! =========================================================
-//! Specific Booking Failures
-//! =========================================================
 
 class OutOfBoundsFailure extends Failure {
   const OutOfBoundsFailure({required super.message});

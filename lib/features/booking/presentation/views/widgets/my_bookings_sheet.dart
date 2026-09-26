@@ -8,9 +8,6 @@ import 'package:bookers/core/utils/app_constants.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_cubit.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 
-//! =========================================================
-//! Widget: MyBookingsSheet
-//! =========================================================
 
 class MyBookingsSheet extends StatelessWidget {
   const MyBookingsSheet({super.key});
@@ -65,7 +62,7 @@ class MyBookingsSheet extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.confirmation_num_rounded, color: AppColors.primaryLight, size: 20.sp),
+                          Icon(Icons.confirmation_num_rounded, color: AppColors.primary, size: 20.sp),
                           SizedBox(width: 8.w),
                           Text(
                             AppTranslations.tr('myBookingsTitle', isArabic: isAr),
@@ -76,12 +73,12 @@ class MyBookingsSheet extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.15),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(AppConstants.radiusSmall),
                         ),
                         child: Text(
                           '${bookings.length}',
-                          style: AppTextStyles.badge.copyWith(color: AppColors.primaryLight),
+                          style: AppTextStyles.badge.copyWith(color: AppColors.primary),
                         ),
                       ),
                     ],
@@ -119,12 +116,19 @@ class MyBookingsSheet extends StatelessWidget {
                         return Container(
                           padding: EdgeInsets.all(14.r),
                           decoration: BoxDecoration(
-                            color: AppColors.background,
+                            color: AppColors.surface,
                             borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
                             border: Border.all(
                               color: AppColors.surfaceSubtle,
                               width: 1.2,
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0x060F172A),
+                                blurRadius: 6.r,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,12 +141,12 @@ class MyBookingsSheet extends StatelessWidget {
                                       Container(
                                         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                                         decoration: BoxDecoration(
-                                          color: AppColors.primary.withValues(alpha: 0.2),
+                                          color: AppColors.primary.withValues(alpha: 0.1),
                                           borderRadius: BorderRadius.circular(4.r),
                                         ),
                                         child: Text(
                                           ticket.id,
-                                          style: AppTextStyles.micro.copyWith(color: AppColors.primaryLight),
+                                          style: AppTextStyles.micro.copyWith(color: AppColors.primary),
                                         ),
                                       ),
                                       SizedBox(width: 6.w),

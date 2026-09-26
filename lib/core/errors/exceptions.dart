@@ -1,6 +1,3 @@
-//! =========================================================
-//! Core Exceptions
-//! =========================================================
 
 class LocalDataSourceException implements Exception {
   const LocalDataSourceException({required this.message});

@@ -13,26 +13,20 @@ import 'package:bookers/features/booking/domain/use_cases/reset_schedule_use_cas
 import 'package:bookers/features/booking/domain/use_cases/validate_booking_use_case.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_cubit.dart';
 
-//! =========================================================
-//! Global Service Locator
-//! =========================================================
 
 final getIt = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
-  //! Data Sources
   getIt.registerLazySingleton<BookingLocalDataSource>(
     () => BookingLocalDataSourceImpl(),
   );
 
-  //! Repositories
   getIt.registerLazySingleton<BookingRepository>(
     () => BookingRepositoryImpl(
       localDataSource: getIt<BookingLocalDataSource>(),
     ),
   );
 
-  //! Use Cases
   getIt.registerLazySingleton<GetDayScheduleUseCase>(
     () => GetDayScheduleUseCase(
       repository: getIt<BookingRepository>(),
@@ -79,7 +73,6 @@ Future<void> setupServiceLocator() async {
     ),
   );
 
-  //! Cubits / Blocs (Factory registration)
   getIt.registerFactory<BookingCubit>(
     () => BookingCubit(
       getDayScheduleUseCase: getIt<GetDayScheduleUseCase>(),

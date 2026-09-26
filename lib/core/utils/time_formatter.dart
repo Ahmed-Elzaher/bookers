@@ -1,8 +1,5 @@
 import 'package:bookers/core/utils/app_constants.dart';
 
-//! =========================================================
-//! Time Formatting Utilities
-//! =========================================================
 
 abstract class TimeFormatter {
   /// يحسب الدقائق منذ منتصف الليل بناءً على مؤشر الخانة (0..17)

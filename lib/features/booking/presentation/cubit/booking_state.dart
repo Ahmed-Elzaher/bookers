@@ -6,9 +6,6 @@ import 'package:bookers/features/booking/domain/entities/booking_status.dart';
 import 'package:bookers/features/booking/domain/entities/slot_entity.dart';
 import 'package:bookers/features/booking/domain/entities/user_booking_entity.dart';
 
-//! =========================================================
-//! Presentation State: BookingState
-//! =========================================================
 
 class BookingState extends Equatable {
   const BookingState({
