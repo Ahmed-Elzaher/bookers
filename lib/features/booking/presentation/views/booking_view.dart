@@ -81,8 +81,9 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
 
         if (state.isBookingConfirmed && state.userBookings.isNotEmpty) {
           final latestBooking = state.userBookings.last;
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(
+          final messenger = ScaffoldMessenger.of(context);
+          messenger.hideCurrentSnackBar();
+          messenger.showSnackBar(
             SnackBar(
               backgroundColor: AppColors.surface,
               behavior: SnackBarBehavior.floating,
@@ -110,12 +111,16 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
                 label: state.isArabic ? 'تراجع' : 'Undo',
                 textColor: AppColors.error,
                 onPressed: () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  messenger.hideCurrentSnackBar();
                   context.read<BookingCubit>().cancelBooking(latestBooking.id);
                 },
               ),
             ),
           );
+
+          Future.delayed(const Duration(milliseconds: 3000), () {
+            messenger.hideCurrentSnackBar();
+          });
         }
       },
       builder: (context, state) {
