@@ -18,8 +18,11 @@ abstract class AppConstants {
   static double get radiusLarge => 16.r;
   static double get radiusModal => 24.r;
 
-  // Unified Animations
+  // Unified Animations & Durations
   static const Duration animationFast = Duration(milliseconds: 200);
   static const Duration animationNormal = Duration(milliseconds: 350);
   static const Duration animationSlow = Duration(milliseconds: 500);
+  static const Duration scrollDuration = Duration(milliseconds: 450);
+  static const Duration toastDuration = Duration(seconds: 2);
+  static const Duration splashDelay = Duration(milliseconds: 2400);
 }

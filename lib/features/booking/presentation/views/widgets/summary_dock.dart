@@ -33,7 +33,7 @@ class SummaryDock extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: const Color(0x0E0F172A),
+                color: AppColors.textPrimary.withValues(alpha: 0.06),
                 blurRadius: 20.r,
                 offset: const Offset(0, -6),
               ),
@@ -103,14 +103,14 @@ class SummaryDock extends StatelessWidget {
                     Expanded(
                       child: AnimatedScale(
                         scale: canConfirm ? 1.0 : 0.98,
-                        duration: const Duration(milliseconds: 180),
+                        duration: AppConstants.animationFast,
                         curve: Curves.easeOutCubic,
                         child: ElevatedButton.icon(
                           onPressed: canConfirm ? () => _handleConfirm(cubit) : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             foregroundColor: AppColors.white,
-                            disabledBackgroundColor: const Color(0xFFF1F5F9),
+                            disabledBackgroundColor: AppColors.unavailableBg,
                             disabledForegroundColor: AppColors.textMuted,
                             elevation: canConfirm ? 3 : 0,
                             shadowColor: AppColors.primary.withValues(alpha: 0.35),

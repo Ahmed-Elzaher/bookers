@@ -124,7 +124,7 @@ class MyBookingsSheet extends StatelessWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0x060F172A),
+                                color: AppColors.textPrimary.withValues(alpha: 0.03),
                                 blurRadius: 6.r,
                                 offset: const Offset(0, 2),
                               ),
@@ -169,7 +169,7 @@ class MyBookingsSheet extends StatelessWidget {
                                         Icon(Icons.check_circle_rounded, size: 11.sp, color: AppColors.available),
                                         SizedBox(width: 3.w),
                                         Text(
-                                          isAr ? 'مؤكد' : 'Confirmed',
+                                          AppTranslations.tr('confirmed', isArabic: isAr),
                                           style: AppTextStyles.micro.copyWith(color: AppColors.available),
                                         ),
                                       ],
@@ -201,7 +201,7 @@ class MyBookingsSheet extends StatelessWidget {
                                           AppTranslations.tr('cancelSuccess', isArabic: isAr),
                                           style: AppTextStyles.bodySmall.copyWith(color: AppColors.textPrimary),
                                         ),
-                                        duration: const Duration(seconds: 2),
+                                        duration: AppConstants.toastDuration,
                                       ),
                                     );
                                   },

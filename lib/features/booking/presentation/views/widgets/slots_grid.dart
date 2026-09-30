@@ -5,13 +5,20 @@ import 'package:bookers/features/booking/presentation/cubit/booking_cubit.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/slot_card.dart';
 
+import 'package:bookers/core/localization/app_translations.dart';
 import 'package:bookers/core/theme/app_colors.dart';
 import 'package:bookers/core/theme/app_text_styles.dart';
+import 'package:bookers/core/utils/app_constants.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/my_bookings_sheet.dart';
 
 
 class SlotsGrid extends StatelessWidget {
   const SlotsGrid({super.key});
+
+  /// Global keys for every slot to enable 100% precise auto-scroll via Scrollable.ensureVisible
+  static final Map<int, GlobalKey> slotKeys = {
+    for (int i = 0; i < AppConstants.totalDaySlots; i++) i: GlobalKey(),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +44,20 @@ class SlotsGrid extends StatelessWidget {
 
         final periods = [
           _TimePeriod(
-            title: isAr ? 'الفترة الصباحية' : 'Morning Period',
-            timeRange: isAr ? '9:00 ص - 12:00 م' : '9:00 AM - 12:00 PM',
+            title: AppTranslations.tr('morningPeriod', isArabic: isAr),
+            timeRange: AppTranslations.tr('morningRange', isArabic: isAr),
             icon: Icons.wb_twilight_rounded,
             indices: List.generate(6, (i) => i),
           ),
           _TimePeriod(
-            title: isAr ? 'فترة الظهيرة' : 'Afternoon Period',
-            timeRange: isAr ? '12:00 م - 3:00 م' : '12:00 PM - 3:00 PM',
+            title: AppTranslations.tr('afternoonPeriod', isArabic: isAr),
+            timeRange: AppTranslations.tr('afternoonRange', isArabic: isAr),
             icon: Icons.wb_sunny_rounded,
             indices: List.generate(6, (i) => i + 6),
           ),
           _TimePeriod(
-            title: isAr ? 'فترة المساء' : 'Evening Period',
-            timeRange: isAr ? '3:00 م - 6:00 م' : '3:00 PM - 6:00 PM',
+            title: AppTranslations.tr('eveningPeriod', isArabic: isAr),
+            timeRange: AppTranslations.tr('eveningRange', isArabic: isAr),
             icon: Icons.nightlight_round,
             indices: List.generate(6, (i) => i + 12),
           ),
@@ -135,7 +142,7 @@ class SlotsGrid extends StatelessWidget {
                           final isFocused = state.focusedSlotIndex == index;
 
                           return SlotCard(
-                            key: ValueKey('slot_${slot.index}'),
+                            key: SlotsGrid.slotKeys[index] ?? ValueKey('slot_${slot.index}'),
                             slot: slot,
                             displayStatus: displayStatus,
                             isEligibleStart: isEligibleStart,

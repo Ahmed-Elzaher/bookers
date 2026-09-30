@@ -114,7 +114,7 @@ class _DurationPillState extends State<_DurationPill> {
   Widget build(BuildContext context) {
     return AnimatedScale(
       scale: _isPressed ? 0.95 : 1.0,
-      duration: const Duration(milliseconds: 100),
+      duration: AppConstants.animationFast,
       curve: Curves.easeOutCubic,
       child: InkWell(
         onTapDown: (_) => setState(() => _isPressed = true),
@@ -153,7 +153,7 @@ class _DurationPillState extends State<_DurationPill> {
                   ]
                 : [
                     BoxShadow(
-                      color: const Color(0x080F172A),
+                      color: AppColors.textPrimary.withValues(alpha: 0.04),
                       blurRadius: 4.r,
                       offset: const Offset(0, 2),
                     ),

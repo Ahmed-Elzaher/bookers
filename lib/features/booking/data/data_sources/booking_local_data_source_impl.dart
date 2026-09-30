@@ -5,7 +5,6 @@ import 'package:bookers/features/booking/domain/entities/booking_duration.dart';
 import 'package:bookers/features/booking/domain/entities/booking_status.dart';
 import 'package:bookers/features/booking/domain/entities/user_booking_entity.dart';
 
-
 class BookingLocalDataSourceImpl implements BookingLocalDataSource {
   BookingLocalDataSourceImpl() {
     _slots = _generateInitialSlots();
@@ -44,7 +43,8 @@ class BookingLocalDataSourceImpl implements BookingLocalDataSource {
     _ticketCounter++;
 
     final now = DateTime.now();
-    final timeStr = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+    final timeStr =
+        '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     final ticket = UserBookingEntity(
       id: ticketId,
@@ -72,7 +72,9 @@ class BookingLocalDataSourceImpl implements BookingLocalDataSource {
       final updated = List<SlotModel>.from(_slots);
       for (final slotIndex in ticket.slotIndices) {
         if (slotIndex >= 0 && slotIndex < AppConstants.totalDaySlots) {
-          updated[slotIndex] = updated[slotIndex].copyWith(status: BookingStatus.available);
+          updated[slotIndex] = updated[slotIndex].copyWith(
+            status: BookingStatus.available,
+          );
         }
       }
       _slots = updated;

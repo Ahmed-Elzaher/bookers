@@ -2,8 +2,7 @@ import 'package:bookers/features/booking/data/models/slot_model.dart';
 import 'package:bookers/features/booking/domain/entities/booking_duration.dart';
 import 'package:bookers/features/booking/domain/entities/user_booking_entity.dart';
 
-
-abstract class BookingLocalDataSource {
+abstract interface class BookingLocalDataSource {
   /// قراءة الجدول المحلي الحالي
   List<SlotModel> getDailySlots();
 

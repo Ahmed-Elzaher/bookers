@@ -50,29 +50,23 @@ class DiagnosticDialog extends StatelessWidget {
         if (failure is IsolatedGapFailure) {
           accentColor = AppColors.warning;
           iconData = Icons.schedule_rounded;
-          title = isAr ? 'الموعد غير متوافق مع الجدول' : 'Slot Incompatible With Schedule';
-          description = isAr
-              ? 'عفواً، لا يمكن بدء موعد بهذا التوقيت لضمان تنظيم جدول المواعيد. يُرجى اختيار أحد المواعيد البديلة المقترحة بالأسفل.'
-              : 'This time slot cannot be booked to preserve schedule organization. Please choose one of the recommended alternative slots below.';
+          title = AppTranslations.tr('isolatedGapTitle', isArabic: isAr);
+          description = AppTranslations.tr('isolatedGapDesc', isArabic: isAr);
         } else if (failure is OverlapFailure) {
           accentColor = AppColors.error;
           iconData = Icons.event_busy_rounded;
-          title = isAr ? 'تعارض مع موعد آخر' : 'Schedule Conflict';
-          description = isAr
-              ? 'يتعارض هذا التوقيت مع موعد محجوز مسبقاً أو فترة استراحة. يمكنك اختيار أحد المواعيد المتاحة.'
-              : 'The selected slot conflicts with an existing booking or break. Please select from the available alternatives.';
+          title = AppTranslations.tr('conflictTitle', isArabic: isAr);
+          description = AppTranslations.tr('conflictDesc', isArabic: isAr);
         } else if (failure is OutOfBoundsFailure) {
           accentColor = AppColors.error;
           iconData = Icons.av_timer_rounded;
-          title = isAr ? 'تجاوز موعد الإغلاق' : 'Past Closing Time';
-          description = isAr
-              ? 'مدة الحجز المختارة تتجاوز موعد نهاية يوم العمل (الساعة 6:00 مساءً). نقترح عليك البدء في توقيت أبكر.'
-              : 'The selected duration extends past the 6:00 PM closing time. We recommend choosing an earlier start time.';
+          title = AppTranslations.tr('outOfBoundsTitle', isArabic: isAr);
+          description = AppTranslations.tr('outOfBoundsDesc', isArabic: isAr);
         } else {
           accentColor = AppColors.textMuted;
           iconData = Icons.info_outline_rounded;
-          title = isAr ? 'الموعد غير متاح' : 'Slot Unavailable';
-          description = isAr ? 'هذا الموعد محجوز أو غير متاح حالياً.' : failure.message;
+          title = AppTranslations.tr('slotUnavailableTitle', isArabic: isAr);
+          description = AppTranslations.tr('slotUnavailableDesc', isArabic: isAr);
         }
 
         return Directionality(

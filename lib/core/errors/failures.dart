@@ -12,12 +12,12 @@ abstract class Failure extends Equatable {
 
 
 class OutOfBoundsFailure extends Failure {
-  const OutOfBoundsFailure({required super.message});
+  const OutOfBoundsFailure({super.message = 'Requested slot or span exceeds day boundary'});
 }
 
 class OverlapFailure extends Failure {
   const OverlapFailure({
-    required super.message,
+    super.message = 'Selected range overlaps with an existing booking or break',
     this.conflictingIndex,
   });
 
@@ -29,7 +29,7 @@ class OverlapFailure extends Failure {
 
 class IsolatedGapFailure extends Failure {
   const IsolatedGapFailure({
-    required super.message,
+    super.message = 'Booking creates an isolated 30-minute orphaned slot',
     this.gapIndex,
   });
 
@@ -41,7 +41,7 @@ class IsolatedGapFailure extends Failure {
 
 class InvalidStartFailure extends Failure {
   const InvalidStartFailure({
-    required super.message,
+    super.message = 'Selected start slot is not available',
     this.startIndex,
   });
 

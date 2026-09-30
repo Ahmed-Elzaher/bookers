@@ -13,7 +13,6 @@ import 'package:bookers/features/booking/domain/use_cases/reset_schedule_use_cas
 import 'package:bookers/features/booking/domain/use_cases/validate_booking_use_case.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 
-
 class BookingCubit extends Cubit<BookingState> {
   BookingCubit({
     required GetDayScheduleUseCase getDayScheduleUseCase,
@@ -26,11 +25,11 @@ class BookingCubit extends Cubit<BookingState> {
     required this.cancelBookingUseCase,
     required this.repository,
   }) : super(
-          BookingState(
-            slots: getDayScheduleUseCase(),
-            selectedDuration: BookingDuration.thirtyMin,
-          ),
-        ) {
+         BookingState(
+           slots: getDayScheduleUseCase(),
+           selectedDuration: BookingDuration.thirtyMin,
+         ),
+       ) {
     _updateValidStartIndices();
   }
 
@@ -120,7 +119,10 @@ class BookingCubit extends Cubit<BookingState> {
     );
 
     final updatedTickets = getUserBookingsUseCase();
-    final newValidStarts = _calculateValidStarts(state.selectedDuration, updatedSlots);
+    final newValidStarts = _calculateValidStarts(
+      state.selectedDuration,
+      updatedSlots,
+    );
 
     emit(
       state.copyWith(
@@ -143,7 +145,10 @@ class BookingCubit extends Cubit<BookingState> {
   void cancelBooking(String bookingId) {
     final updatedSlots = cancelBookingUseCase(bookingId);
     final updatedTickets = getUserBookingsUseCase();
-    final newValidStarts = _calculateValidStarts(state.selectedDuration, updatedSlots);
+    final newValidStarts = _calculateValidStarts(
+      state.selectedDuration,
+      updatedSlots,
+    );
 
     emit(
       state.copyWith(
@@ -156,7 +161,10 @@ class BookingCubit extends Cubit<BookingState> {
 
   void resetSchedule() {
     final defaultSlots = resetScheduleUseCase();
-    final newValidStarts = _calculateValidStarts(BookingDuration.thirtyMin, defaultSlots);
+    final newValidStarts = _calculateValidStarts(
+      BookingDuration.thirtyMin,
+      defaultSlots,
+    );
 
     emit(
       BookingState(
@@ -182,7 +190,6 @@ class BookingCubit extends Cubit<BookingState> {
     );
   }
 
-
   void _revalidateSelection({
     required int startIndex,
     required BookingDuration duration,
@@ -195,7 +202,8 @@ class BookingCubit extends Cubit<BookingState> {
       currentSlots: state.slots,
     );
 
-    final currentValidStarts = validStarts ?? _calculateValidStarts(duration, state.slots);
+    final currentValidStarts =
+        validStarts ?? _calculateValidStarts(duration, state.slots);
 
     validationResult.fold(
       (failure) {
@@ -243,11 +251,17 @@ class BookingCubit extends Cubit<BookingState> {
   }
 
   void _updateValidStartIndices() {
-    final validStarts = _calculateValidStarts(state.selectedDuration, state.slots);
+    final validStarts = _calculateValidStarts(
+      state.selectedDuration,
+      state.slots,
+    );
     emit(state.copyWith(validStartIndices: validStarts));
   }
 
-  Set<int> _calculateValidStarts(BookingDuration duration, List<SlotEntity> currentSlots) {
+  Set<int> _calculateValidStarts(
+    BookingDuration duration,
+    List<SlotEntity> currentSlots,
+  ) {
     final validSet = <int>{};
     for (int i = 0; i < AppConstants.totalDaySlots; i++) {
       final res = validateBookingUseCase(

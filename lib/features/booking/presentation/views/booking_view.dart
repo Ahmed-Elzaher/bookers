@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bookers/core/localization/app_translations.dart';
 import 'package:bookers/core/theme/app_colors.dart';
 import 'package:bookers/core/theme/app_text_styles.dart';
+import 'package:bookers/core/utils/app_constants.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_cubit.dart';
 import 'package:bookers/features/booking/presentation/cubit/booking_state.dart';
 import 'package:bookers/features/booking/presentation/views/widgets/booking_header.dart';
@@ -46,19 +48,16 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
   void _scrollToSlot(int slotIndex) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_scrollController.hasClients) return;
-      // Grid has 2 columns. Row index = slotIndex ~/ 2.
-      // Approximate height of each row is ~115.h
-      final double targetOffset = (slotIndex ~/ 2) * 115.0.h;
-      final double clampedOffset = targetOffset.clamp(
-        0.0,
-        _scrollController.position.maxScrollExtent,
-      );
-
-      _scrollController.animateTo(
-        clampedOffset,
-        duration: const Duration(milliseconds: 450),
-        curve: Curves.easeInOutCubic,
-      );
+      final targetKey = SlotsGrid.slotKeys[slotIndex];
+      final targetContext = targetKey?.currentContext;
+      if (targetContext != null) {
+        Scrollable.ensureVisible(
+          targetContext,
+          alignment: 0.35,
+          duration: AppConstants.scrollDuration,
+          curve: Curves.easeInOutCubic,
+        );
+      }
     });
   }
 
@@ -83,14 +82,23 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
           final latestBooking = state.userBookings.last;
           final messenger = ScaffoldMessenger.of(context);
           messenger.hideCurrentSnackBar();
+
+          final rangeText = '${latestBooking.startTimeFormatted} - ${latestBooking.endTimeFormatted}';
+          final message = '${AppTranslations.tr('bookingConfirmedSuccess', isArabic: state.isArabic)} ($rangeText)';
+
           messenger.showSnackBar(
             SnackBar(
               backgroundColor: AppColors.surface,
               behavior: SnackBarBehavior.floating,
-              duration: const Duration(seconds: 3),
+              duration: AppConstants.toastDuration,
+              margin: EdgeInsets.only(
+                left: 16.w,
+                right: 16.w,
+                bottom: 85.h,
+              ),
               dismissDirection: DismissDirection.horizontal,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
                 side: const BorderSide(color: AppColors.available, width: 1.5),
               ),
               content: Row(
@@ -99,16 +107,14 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
                   SizedBox(width: 8.w),
                   Expanded(
                     child: Text(
-                      state.isArabic
-                          ? 'تم تأكيد حجزك بنجاح (${latestBooking.startTimeFormatted} - ${latestBooking.endTimeFormatted})'
-                          : 'Booking confirmed (${latestBooking.startTimeFormatted} - ${latestBooking.endTimeFormatted})',
+                      message,
                       style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary),
                     ),
                   ),
                 ],
               ),
               action: SnackBarAction(
-                label: state.isArabic ? 'تراجع' : 'Undo',
+                label: AppTranslations.tr('undo', isArabic: state.isArabic),
                 textColor: AppColors.error,
                 onPressed: () {
                   messenger.hideCurrentSnackBar();
@@ -117,10 +123,6 @@ class _BookingViewBodyState extends State<_BookingViewBody> {
               ),
             ),
           );
-
-          Future.delayed(const Duration(milliseconds: 3000), () {
-            messenger.hideCurrentSnackBar();
-          });
         }
       },
       builder: (context, state) {

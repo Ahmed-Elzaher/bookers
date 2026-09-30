@@ -104,13 +104,13 @@ class _SlotCardState extends State<SlotCard> {
           statusLabel = AppTranslations.tr('available', isArabic: widget.isArabic);
           shadows = [
             BoxShadow(
-              color: const Color(0x0A0F172A),
+              color: AppColors.textPrimary.withValues(alpha: 0.04),
               blurRadius: 6.r,
               offset: const Offset(0, 2),
             ),
           ];
         } else {
-          bgColor = const Color(0xFFF8FAFC);
+          bgColor = AppColors.background;
           borderColor = AppColors.surfaceSubtle;
           textColor = AppColors.textMuted;
           statusIcon = Icons.remove_circle_outline_rounded;
@@ -124,7 +124,7 @@ class _SlotCardState extends State<SlotCard> {
 
     return AnimatedScale(
       scale: _isPressed ? 0.96 : 1.0,
-      duration: const Duration(milliseconds: 120),
+      duration: AppConstants.animationFast,
       curve: Curves.easeOutCubic,
       child: InkWell(
         onTapDown: (_) => setState(() => _isPressed = true),
